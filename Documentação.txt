@@ -1,0 +1,51 @@
+Documentação do Desafio Técnico - primeiro passo
+A documentação a seguir descreve o processo de solução do desafio técnico cujo foco é a construção de uma aplicação em que estou desenvolvendo para um desafio.
+
+Pilha Tecnológica Exigida:
+
+Banco de Dados: Microsoft SQL Server
+Back-end: VB.NET (ASP.NET WebForms)
+Front-end: JavaScript em conjunto com a biblioteca externa Telerik UI for ASP.NET AJAX
+Fonte de Dados: Movies.csv (Kaggle)
+
+
+Desafio 1: Estruturação do Banco de Dados e Importação
+A primeira etapa do desafio consistiu inteiramente em arquitetar e popular as tabelas que irão sustentar a aplicação principal.
+
+
+Obstáculo 1: Definição de Identificador Único
+Desafio: Como garantir que cada filme pudesse ser rastreado sem ambiguidade pelo código da aplicação de forma padronizada.
+Conhecimento Aplicado: Adoção do conceito de Chave Primária (Primary Key). Durante a modelagem visual, a coluna id do CSV foi designada no banco como PK, impedindo registros duplicados e servindo como "âncora" para todas as futuras buscas no sistema VB.NET.
+Obstáculo 2: Ausência de Instância do Banco
+Desafio: Ao inicializar a ferramenta SSMS (SQL Server Management Studio), obteve-se o erro: "O servidor não foi encontrado ou não estava acessível (Provider: Named Pipes Provider, error: 40)".
+Causa e Resolução: Foi diagnosticado que o computador possuía apenas o programa de gerenciamento (a interface visual), mas faltava o "Motor" do banco. A situação foi superada instalando-se a instância do SQL Server Express. A partir disso, a autenticação foi estabelecida via Windows Authentication no diretório .\SQLEXPRESS.
+Obstáculo 3: Higienização e Tipagem de Dados no Cadastro (DBNull)
+Desafio: O assistente de importação de banco de dados travava sistematicamente durante a inserção com a mensagem: "A coluna 'overview' não permite DBNull.Value".
+Causa e Resolução:
+A importação vinha falhando ao encontrar filmes do Movies.csv em que a equipe do Kaggle não preencheu o resumo da história na coluna "overview". A regra foi alterada para a liberação de valores nulos, marcando-se a opção Allow Nulls (Permitir Nulos).
+Ajuste do Data Type: Como a referida coluna contemplava descrições gigantescas, o tamanho do campo em banco foi alterado preventivamente para nvarchar(MAX), evitando o corte prematuro de dados textuais e falhas por limite de inserção.
+
+Status Atual: A fase de infraestrutura da informação foi finalizada 100% com sucesso. O ambiente local está em conformidade e preparado para ser integrado à aplicação VB.NET.
+
+------------------------------------------------------
+
+Desafio 2: Renderização de Dados no Front-end com Telerik RadGrid
+A segunda etapa exigiu conectar o banco de dados à interface do usuário via código (VB.NET), exibindo os dados em um grid avançado do Telerik.
+
+Obstáculo 1: Configuração e Alvo da Instância do Banco
+Desafio: Ligar o "Data Source" do Web.config à mesma instância do banco instalada anteriormente. Inicialmente o sistema acusou o "Erro 26 (Instância não localizada)", indicando que '.\SQLEXPRESS' estava incorreto.
+Causa e Resolução: A instância do banco instalada foi a "Instância Padrão" (MSSQLSERVER) e não a versão nomeada. A linha de conexão no Web.config (connectionStrings) foi corrigida utilizando o '.' (ponto) no Data Source, que significa "servidor local principal".
+
+Obstáculo 2: O erro 403.14 Forbidden no carregamento inicial
+Desafio: O Visual Studio e IIS Express recusaram a exibição da tela inicial, gerando um erro de listagem de diretório negada.
+Causa e Resolução: A ferramenta estava tentando abrir a "pasta raiz" do projeto ao invés da página alvo. A solução técnica foi acessar diretamente a URL completa finalizando com '/Projeto.aspx', garantindo que o servidor servisse o arquivo de destino.
+
+Obstáculo 3: Carregamento Performático do Telerik (Advanced Data Binding)
+Desafio: A tag antiga SqlDataSource foi removida e o RadGrid precisava receber os dados pesados sem travar a tela.
+Conhecimento Aplicado: Adotamos o padrão recomendado "Advanced Data Binding". No Front-end (.aspx), informamos o evento 'OnNeedDataSource' dentro da tag do grid. No Backend (VB.NET), importamos a biblioteca 'System.Data.SqlClient' e escrevemos o comando SQL 'SELECT', jogando o resultado dentro de um 'DataTable' e setando o 'GridFilmes.DataSource'.
+
+Obstáculo 4: Erro do Telerik (WebResource.axd is missing)
+Desafio: A página abriu, porém estourou logo de cara exigindo um HttpHandler no Web.config.
+Causa e Resolução: Componentes modernos (como o RadScriptManager) precisam de permissões especiais de injeção de Javascript no navegador para funcionarem. Adicionamos a tag `<system.webServer>` no final do Web.config liberando o WebResource especial da Telerik.
+
+Status Atual: Módulo 2 finalizado 100% com sucesso. Banco de dados e Front-end interligados, exibindo lindamente o Grid populado com as informações processadas pelo ASP.NET.
