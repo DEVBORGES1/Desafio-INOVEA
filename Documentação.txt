@@ -49,3 +49,26 @@ Desafio: A página abriu, porém estourou logo de cara exigindo um HttpHandler n
 Causa e Resolução: Componentes modernos (como o RadScriptManager) precisam de permissões especiais de injeção de Javascript no navegador para funcionarem. Adicionamos a tag `<system.webServer>` no final do Web.config liberando o WebResource especial da Telerik.
 
 Status Atual: Módulo 2 finalizado 100% com sucesso. Banco de dados e Front-end interligados, exibindo lindamente o Grid populado com as informações processadas pelo ASP.NET.
+
+------------------------------------------------------
+
+Desafio 3: Internacionalização / Tradução (L10N) do RadGrid
+O terceiro passo consistiu em traduzir os componentes interativos do RadGrid (Paginador, Tooltips de Filtro e Ordenação) da sua língua nativa (inglês) para o Português (pt-BR).
+
+Obstáculo 1: Configuração do Dicionário Global (Global Resources)
+Desafio: A plataforma ASP.NET e o Telerik por padrão não traduzem strings de filtro e ordenação sem os arquivos XML de recursos (.resx) apropriados.
+Conhecimento Aplicado: Explorou-se o conceito nativo da Microsoft (A pasta 'App_GlobalResources'). Foi criado um dicionário 'RadGrid.Main.pt-BR.resx' no formato Tabela Visual (Resource Editor do Visual Studio) alimentado por pares de Chave/Valor oficiais da Telerik, como 'FilterEqualTo' -> 'Igual a'.
+
+Obstáculo 2: Cache de Compilação e Arquivos Neutros (Gotcha do IIS)
+Desafio: Apesar do arquivo '.pt-BR' e do código 'Culture="pt-BR"' estarem configurados, a aplicação insistia em não carregar as traduções e manter o inglês (Fallback).
+Causa e Resolução: Em projetos Web Site clássicos do compilador ASP.NET, a classe 'ResourceManager' aborta a checagem caso o arquivo base / neutro correspondente não exista no diretório. A falha do sistema foi solucionada duplicando o arquivo e o renomeando para 'RadGrid.Main.resx' (neutro), obrigando o IIS a destravar o serviço de leitura após um 'Rebuild'. 
+
+Obstáculo 3: Interceptação e Tradução Manual via Code-Behind (Solução Definitiva)
+Desafio: Em vez de depender das inconstâncias do dicionário XML e do cache do servidor IIS, foi exigido uma rota de programação direta para forçar a interface independente da máquina.
+Conhecimento Aplicado: No Front-end (.aspx), configuraram-se manualmente as propriedades filhas 'PagerStyle' e 'SortingSettings'. Já em relação ao Menu de Filtros, interceptou-se o evento nativo OnInit ('GridFilmes_Init') do RadGrid dentro do VB.NET. Através de um laço de repetição dinâmico (For Each), os campos subjacentes 'RadMenuItem' foram fisgados e renomeados programaticamente em tempo de execução. Esta intervenção por Back-end sobrepõe eventuais erros de cache na interface.
+
+Obstáculo 4: Conflito de Codificação (Caracteres e Acentos Quebrados - "ContÃ©m")
+Desafio: Ao inserir as palavras assentuadas direto pelo código C#/VB.NET, o compilador do servidor as transformou em caracteres ilegíveis durante a renderização (bug de UTF-8 vs ANSI).
+Causa e Resolução: Isso ocorreu por uma assimetria na interpretação de formato de arquivo. O problema de codificação clássico foi atacado de frente forçando a leitura correta de UTF-8 direto no coração da aplicação (Web.config) utilizando a tag '<globalization fileEncoding="utf-8" />' além do salvamento nativo explícito da ferramenta IDE.
+
+Status Atual: Desafio 3 concluído perfeitamente. O RadGrid opera maravilhosamente bem nos padrões de linguagem PT-BR, garantindo total conforto para usuários em português.
