@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Projeto.aspx.vb" Inherits="Projeto" %>
+<%@ Page Language="VB" AutoEventWireup="false" Culture="pt-BR" UICulture="pt-BR" CodeFile="Projeto.aspx.vb" Inherits="Projeto" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <!DOCTYPE html>
@@ -18,7 +18,20 @@
 
         <h2>Todos Os filmes importados</h2>
         
-        <telerik:RadGrid id="GridFilmes" runat="server" OnNeedDataSource="GridFilmes_NeedDataSource"></telerik:RadGrid>
+        <telerik:RadGrid id="GridFilmes" 
+            runat="server" 
+            Culture="pt-BR"
+            AllowPaging="true"
+            AllowSorting="true"
+            AllowFilteringByColumn="true"
+            OnNeedDataSource="GridFilmes_NeedDataSource"
+            OnInit="GridFilmes_Init">
+            
+            <SortingSettings SortToolTip="Clique para ordenar" SortedAscToolTip="Ordenado em ordem crescente" SortedDescToolTip="Ordenado em ordem decrescente" />
+            
+            <PagerStyle FirstPageToolTip="Primeira Página" LastPageToolTip="Última Página" NextPagesToolTip="Próximas Páginas" NextPageToolTip="Próxima Página" PrevPagesToolTip="Páginas Anteriores" PrevPageToolTip="Página Anterior" PageSizeLabelText="Tamanho da Página:" PagerTextFormat="Mudar página: {4} &amp;nbsp;Página &lt;strong&gt;{0}&lt;/strong&gt; de &lt;strong&gt;{1}&lt;/strong&gt;, itens &lt;strong&gt;{2}&lt;/strong&gt; a &lt;strong&gt;{3}&lt;/strong&gt; de &lt;strong&gt;{5}&lt;/strong&gt;." />
+            
+        </telerik:RadGrid>
         
     </form>
 </body>

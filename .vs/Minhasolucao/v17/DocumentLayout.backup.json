@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\app_globalresources\\radgrid.main.pt-br.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\app_globalresources\\radgrid.main.pt-br.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +22,42 @@
       "DocumentGroups": [
         {
           "DockedWidth": 299,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Projeto.aspx",
-              "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx",
-              "RelativeDocumentMoniker": "solucao\\Projeto.aspx",
-              "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx",
-              "RelativeToolTip": "solucao\\Projeto.aspx",
-              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2026-04-02T04:18:48.366Z",
+              "DocumentIndex": 2,
+              "Title": "RadGrid.Main.pt-BR.resx",
+              "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
+              "RelativeDocumentMoniker": "solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
+              "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
+              "RelativeToolTip": "solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-04-02T23:29:18.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Projeto.aspx",
+              "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx",
+              "RelativeDocumentMoniker": "solucao\\Projeto.aspx",
+              "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx",
+              "RelativeToolTip": "solucao\\Projeto.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-04-02T04:28:58.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Web.config",
               "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Web.config",
               "RelativeDocumentMoniker": "solucao\\Web.config",
               "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Web.config",
               "RelativeToolTip": "solucao\\Web.config",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABwAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2026-04-02T04:20:53.153Z",
               "EditorCaption": ""
