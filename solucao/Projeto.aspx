@@ -1,4 +1,4 @@
-<%@ Page Language="VB" AutoEventWireup="false" Culture="pt-BR" UICulture="pt-BR" CodeFile="Projeto.aspx.vb" Inherits="Projeto" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" Culture="pt-BR" UICulture="pt-BR" CodeFile="Projeto.aspx.vb" Inherits="Projeto" %>
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <!DOCTYPE html>
@@ -24,8 +24,38 @@
             AllowPaging="true"
             AllowSorting="true"
             AllowFilteringByColumn="true"
+            AutoGenerateColumns="false"
             OnNeedDataSource="GridFilmes_NeedDataSource"
-            OnInit="GridFilmes_Init">
+            OnInit="GridFilmes_Init"
+            OnUpdateCommand="GridFilmes_UpdateCommand"
+            OnInsertCommand="GridFilmes_InsertCommand"
+            OnDeleteCommand="GridFilmes_DeleteCommand"
+            >
+               <MasterTableView DataKeyNames="id" CommandItemDisplay="Top">
+                   <CommandItemSettings AddNewRecordText="Adicionar Novo Filme" 
+                       RefreshText="Atualizar Grade" />
+
+
+                   <Columns>
+
+                       <telerik:GridEditCommandColumn EditText="Editar"/>
+                       <telerik:GridBoundColumn DataField="id" HeaderText="ID Único" ReadOnly="true" />
+                       <telerik:GridBoundColumn DataField="title" HeaderText="Titulo do Filme" />
+                       <telerik:GridBoundColumn DataField="overview" HeaderText="Sinopse Oficial" />
+                       <telerik:GridBoundColumn DataField="release_date" HeaderText="Lançamento" DataFormatString="{0:dd/MM/yyyy}" />
+
+                       <telerik:GridButtonColumn CommandName="Delete" Text="Excluir" ConfirmText="Tem certeza que deseja excluir o filme?"/>
+                    
+                   </Columns>
+
+                       <EditFormSettings>
+
+                           <EditColumn UpdateText="Salvar Alterações" CancelText="Não Salvar" />
+                     
+                       </EditFormSettings>
+
+                   </MasterTableView>
+
             
             <SortingSettings SortToolTip="Clique para ordenar" SortedAscToolTip="Ordenado em ordem crescente" SortedDescToolTip="Ordenado em ordem decrescente" />
             
