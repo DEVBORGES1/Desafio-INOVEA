@@ -39,7 +39,6 @@
                    <Columns>
 
                        <telerik:GridEditCommandColumn EditText="Editar"/>
-                       <telerik:GridBoundColumn DataField="id" HeaderText="ID Único" ReadOnly="true" />
                        <telerik:GridBoundColumn DataField="title" HeaderText="Titulo do Filme" />
                        <telerik:GridBoundColumn DataField="overview" HeaderText="Sinopse Oficial" />
                        <telerik:GridBoundColumn DataField="release_date" HeaderText="Lançamento" DataFormatString="{0:dd/MM/yyyy}" />

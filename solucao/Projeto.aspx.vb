@@ -97,15 +97,87 @@ Partial Class Projeto
 
     End Sub
 
-    'Operação de criaçao do Insert'
+
+
+    'Operação de atualização'
+    Protected Sub GridFilmes_UpdateCommand(sender As Object, e As GridCommandEventArgs)
+
+        'Seleção da linha inteira em modo de edição'
+        Dim itemEditado As GridEditableItem = CType(e.Item, GridEditableItem)
+
+        'Arrancar a ancora principal (ID original)'
+        Dim idDoFilme As String = itemEditado.GetDataKeyValue("id").ToString()
+
+        'pegamos tudo que o usuário digitou e jogamos em uma hashtable'
+
+        Dim Valores As New Hashtable()
+
+        itemEditado.ExtractValues(Valores)
+
+        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+
+        Using conexaoSql As New SqlConnection(strConexao)
+
+            Dim comandoDeUpdate As String = "UPDATE Movies Set title = @title, overview = @overview, release_date = @release_date WHERE id = @id"
+
+            Using comandoSql As New SqlCommand(comandoDeUpdate, conexaoSql)
+
+                'Parametros blindados sql injection. o comando if(Dbnull.value) salva nulo'
+
+                comandoSql.Parameters.AddWithValue("@id", idDoFilme)
+                comandoSql.Parameters.AddWithValue("@title", If(Valores("title"), DBNull.Value))
+                comandoSql.Parameters.AddWithValue("@overview", If(Valores("overview"), DBNull.Value))
+                comandoSql.Parameters.AddWithValue("@release_date", If(Valores("release_date"), DBNull.Value))
+
+                conexaoSql.Open()
+
+
+                comandoSql.ExecuteNonQuery()
+
+            End Using
+
+        End Using
+
+    End Sub
+
+    'Operação de criaçao do Insert/criação'
 
     Protected Sub GridFilmes_InsertCommand(sender As Object, e As GridCommandEventArgs)
 
+        'capturação do form em branco'
+        Dim itemNovo As GridEditableItem = CType(e.Item, GridEditableItem)
+
+        Dim valores As New Hashtable()
+
+        itemNovo.ExtractValues(valores)
+        'extrai todas as mensagens do form'
+
+        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+
+        Using conexaoSql As New SqlConnection(strConexao)
+
+            ' não ultilizar o WHERE , Nós empurramos colunas e valores brutos!'
+
+            Dim comandoDeInsert As String = "INSERT INTO Movies (id, title, overview, release_date) VALUES (@id, @title, @overview, @release_date)"
+
+            Using comandoSql As New SqlCommand(comandoDeInsert, conexaoSql)
+
+                'parametros'
+
+                comandoSql.Parameters.AddWithValue("@id", If(valores("id"), DBNull.Value))
+                comandoSql.Parameters.AddWithValue("@title", If(valores("title"), DBNull.Value))
+                comandoSql.Parameters.AddWithValue("@overview", If(valores("overview"), DBNull.Value))
+                comandoSql.Parameters.AddWithValue("@release_date", If(valores("release_date"), DBNull.Value))
+
+                conexaoSql.Open()
+
+                comandoSql.ExecuteNonQuery()
+
+            End Using
+
+        End Using
+
     End Sub
 
-
-    Protected Sub GridFilmes_UpdateCommand(sender As Object, e As GridCommandEventArgs)
-
-    End Sub
 End Class
 

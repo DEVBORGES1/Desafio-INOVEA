@@ -72,3 +72,18 @@ Desafio: Ao inserir as palavras assentuadas direto pelo código C#/VB.NET, o com
 Causa e Resolução: Isso ocorreu por uma assimetria na interpretação de formato de arquivo. O problema de codificação clássico foi atacado de frente forçando a leitura correta de UTF-8 direto no coração da aplicação (Web.config) utilizando a tag '<globalization fileEncoding="utf-8" />' além do salvamento nativo explícito da ferramenta IDE.
 
 Status Atual: Desafio 3 concluído perfeitamente. O RadGrid opera maravilhosamente bem nos padrões de linguagem PT-BR, garantindo total conforto para usuários em português.
+
+------------------------------------------------------
+
+Desafio 4: Habilitação do CRUD (Create, Read, Update, Delete)
+O quarto passo marcou a transformação da aplicação de uma mera tabela de leitura para um painel gerencial administrativo completo, permitindo a total manipulação de dados sobre o Telerik RadGrid.
+
+Obstáculo 1: O Mapeamento Declarativo do Frontend e Configurações Mestras
+Desafio: A propriedade genérica AutoGenerateColumns não permitia controle sobre o design da grade nem suportava a injeção nativa de botões de controle de idioma específico. 
+Conhecimento Aplicado: No ambiente do 'Projeto.aspx', o Grid foi inteiramente remontado. A tag '<MasterTableView>' recebeu as essenciais definições 'CommandItemDisplay=Top' (habilitando a barra de ferramentas de inserção) e 'DataKeyNames=id', uma obrigação lógica do framework para reter a chave primária da linha que os comandos de edição atuarão. Foram geradas declarações precisas como '<telerik:GridEditCommandColumn>' para prover opções modulares em uma estrutura fixa controlada.
+
+Obstáculo 2: A Interação ADO.NET Segura contra Hackers e a extração via Hashtable
+Desafio: Transacionar as requisições enviadas ao Grid no Frontend de forma pura até o SQL local ('MoviesDB'), garantindo que ataques comuns, como Injeção de SQL (SQL Injection), fossem impossíveis.
+Conhecimento Aplicado: Através do 'Projeto.aspx.vb', os três gatilhos morais ('OnUpdateCommand', 'OnInsertCommand', 'OnDeleteCommand') ativaram os scripts Backend. Para resgatar tudo o que foi modificado pelo usuário nas TextBoxes virtuais do grid, foi implementado o método Telerik intrínseco 'item.ExtractValues(Hashtable)'. Já na ligação de arquitetura ADO.NET com o Banco, implementaram-se comandos SQL nativos e atrelou-se a tecnologia de parâmetros (AddWithValue), que encapsula as strings do client em um contêiner fechado blindando todos os campos antes de acionar a 'SqlConnection'. Uma descoberta afortunada se mostrou: por o ID do SQL ser pré-configurado como 'Auto-Incremento', a coluna homônima foi intencionalmente delatada na exibição, deixando a inteligência de inserção dos valores sob inteira responsabilidade do T-SQL.
+
+Status Atual: Desafio 4 finalizado com nota máxima. Os pilares de Criação, Leitura, Atualização e Destruição via ASP.NET Webforms operam perfeitamente. O projeto agora é uma aplicação de Dados Reais.

@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\app_globalresources\\radgrid.main.pt-br.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\app_globalresources\\radgrid.main.pt-br.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\projeto.aspx.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\projeto.aspx.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|c:\\users\\joaov\\onedrive\\desktop\\projetos\\minhasolucao\\solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{A5A132C2-BC66-38DD-9358-17AA63324C99}|C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao|solutionrelative:solucao\\projeto.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,18 +27,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "RadGrid.Main.pt-BR.resx",
-              "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
-              "RelativeDocumentMoniker": "solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
-              "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
-              "RelativeToolTip": "solucao\\App_GlobalResources\\RadGrid.Main.pt-BR.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-04-02T23:29:18.783Z",
+              "Title": "Projeto.aspx.vb",
+              "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx.vb",
+              "RelativeDocumentMoniker": "solucao\\Projeto.aspx.vb",
+              "ToolTip": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx.vb",
+              "RelativeToolTip": "solucao\\Projeto.aspx.vb",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAmwJgAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-04-04T04:10:57.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Projeto.aspx",
               "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Projeto.aspx",
               "RelativeDocumentMoniker": "solucao\\Projeto.aspx",
@@ -51,7 +52,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Web.config",
               "DocumentMoniker": "C:\\Users\\joaov\\OneDrive\\Desktop\\Projetos\\Minhasolucao\\solucao\\Web.config",
               "RelativeDocumentMoniker": "solucao\\Web.config",
