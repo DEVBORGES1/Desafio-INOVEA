@@ -12,17 +12,17 @@ Partial Class detalhes
         If Not IsPostBack Then
 
             ' 1. Pesca o ID invisível que o nosso Javascript atirou lá em cima na Barra de URL
-            Dim idDoFilme As String = Request.QueryString("id")
+            Dim idDoFilme As Integer
 
             ' Proteção: Se a pessoa tentar acessar a tela solta, sem ID nenhum, o sistema ignora.
-            If Not String.IsNullOrEmpty(idDoFilme) Then
+            If Integer.TryParse(Request.QueryString("id"), idDoFilme) Then
                 CarregarDetalhesDoFilme(idDoFilme)
             End If
 
         End If
     End Sub
 
-    Private Sub CarregarDetalhesDoFilme(idParaBuscar As String)
+    Private Sub CarregarDetalhesDoFilme(idParaBuscar As Integer)
         Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
         Dim tabelaVazia As New DataTable()
 
@@ -34,7 +34,7 @@ Partial Class detalhes
             Using comandoSql As New SqlCommand(comandoDeBusca, conexaoSql)
 
                 ' Parâmetro Tipado sempre blindado contra SQL Injection
-                comandoSql.Parameters.AddWithValue("@id", idParaBuscar)
+                comandoSql.Parameters.Add("@id", SqlDbType.Int).Value = idParaBuscar
 
                 Using adaptador As New SqlDataAdapter(comandoSql)
                     conexaoSql.Open()

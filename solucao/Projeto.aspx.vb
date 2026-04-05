@@ -7,16 +7,26 @@ Imports Telerik.Web.UI.Gantt
 Partial Class Projeto
     Inherits System.Web.UI.Page
 
+    Private ReadOnly Property StringConexao As String
+        Get
+            Return ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+        End Get
+    End Property
+
+    Private Sub ExibirMensagem(texto As String, Optional sucesso As Boolean = True)
+        lblMensagem.Visible = True
+        lblMensagem.Text = texto
+        lblMensagem.CssClass = If(sucesso, "mensagem sucesso", "mensagem erro")
+    End Sub
+
 
     Protected Sub GridFilmes_NeedDataSource(sender As Object, e As GridNeedDataSourceEventArgs)
 
         ' 1. Aqui ele vai lá no Web.config e lê aquele link ("Data Source=.\SQLEX...")
-        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
-
         ' 2. Cria uma planilha vazia na memória do servidor
         Dim tabelaVazia As New DataTable()
 
-        Using conexaoSql As New SqlConnection(strConexao)
+        Using conexaoSql As New SqlConnection(StringConexao)
 
             ' 3. Cria a ponte oficial com o Banco SqlConnection
             Dim comandoDeBusca As String = "SELECT TOP 100 id, title, overview, release_date FROM Movies"
@@ -74,26 +84,29 @@ Partial Class Projeto
 
         'CAPTURA FISICAMENTE APENAS DA LINHAS'
         Dim ItemClicado As GridDataItem = CType(e.Item, GridDataItem)
+        Dim idDoFilme As Integer = Convert.ToInt32(ItemClicado.GetDataKeyValue("id"))
 
-        Dim idDoFilme As String = ItemClicado.GetDataKeyValue("id").ToString()
+        Try
+            Using conexaoSql As New SqlConnection(StringConexao)
 
-        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+                Dim comandoDeExclusao As String = "Delete FROM Movies Where id = @id"
 
-        Using conexaoSql As New SqlConnection(strConexao)
+                Using comandoSql As New SqlCommand(comandoDeExclusao, conexaoSql)
 
-            Dim comandoDeExclusao As String = "Delete FROM Movies Where id = @id"
+                    comandoSql.Parameters.Add("@id", SqlDbType.Int).Value = idDoFilme
 
-            Using comandoSql As New SqlCommand(comandoDeExclusao, conexaoSql)
+                    conexaoSql.Open()
+                    comandoSql.ExecuteNonQuery()
 
-                comandoSql.Parameters.AddWithValue("@id", idDoFilme)
-
-                conexaoSql.Open()
-                comandoSql.ExecuteNonQuery()
+                End Using
 
             End Using
 
-
-        End Using
+            ExibirMensagem("Filme removido com sucesso.")
+        Catch ex As Exception
+            ExibirMensagem("Não foi possível excluir o filme agora. Tente novamente.", False)
+            e.Canceled = True
+        End Try
 
     End Sub
 
@@ -106,7 +119,7 @@ Partial Class Projeto
         Dim itemEditado As GridEditableItem = CType(e.Item, GridEditableItem)
 
         'Arrancar a ancora principal (ID original)'
-        Dim idDoFilme As String = itemEditado.GetDataKeyValue("id").ToString()
+        Dim idDoFilme As Integer = Convert.ToInt32(itemEditado.GetDataKeyValue("id"))
 
         'pegamos tudo que o usuário digitou e jogamos em uma hashtable'
 
@@ -114,29 +127,38 @@ Partial Class Projeto
 
         itemEditado.ExtractValues(Valores)
 
-        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+        If Valores("title") Is Nothing OrElse String.IsNullOrWhiteSpace(Valores("title").ToString()) Then
+            ExibirMensagem("O título é obrigatório para salvar alterações.", False)
+            e.Canceled = True
+            Return
+        End If
 
-        Using conexaoSql As New SqlConnection(strConexao)
+        Try
+            Using conexaoSql As New SqlConnection(StringConexao)
 
-            Dim comandoDeUpdate As String = "UPDATE Movies Set title = @title, overview = @overview, release_date = @release_date WHERE id = @id"
+                Dim comandoDeUpdate As String = "UPDATE Movies Set title = @title, overview = @overview, release_date = @release_date WHERE id = @id"
 
-            Using comandoSql As New SqlCommand(comandoDeUpdate, conexaoSql)
+                Using comandoSql As New SqlCommand(comandoDeUpdate, conexaoSql)
 
-                'Parametros blindados sql injection. o comando if(Dbnull.value) salva nulo'
+                    'Parametros blindados sql injection. o comando if(Dbnull.value) salva nulo'
 
-                comandoSql.Parameters.AddWithValue("@id", idDoFilme)
-                comandoSql.Parameters.AddWithValue("@title", If(Valores("title"), DBNull.Value))
-                comandoSql.Parameters.AddWithValue("@overview", If(Valores("overview"), DBNull.Value))
-                comandoSql.Parameters.AddWithValue("@release_date", If(Valores("release_date"), DBNull.Value))
+                    comandoSql.Parameters.Add("@id", SqlDbType.Int).Value = idDoFilme
+                    comandoSql.Parameters.Add("@title", SqlDbType.NVarChar, 255).Value = Valores("title").ToString().Trim()
+                    comandoSql.Parameters.Add("@overview", SqlDbType.NVarChar).Value = If(Valores("overview"), DBNull.Value)
+                    comandoSql.Parameters.Add("@release_date", SqlDbType.Date).Value = If(Valores("release_date"), DBNull.Value)
 
-                conexaoSql.Open()
+                    conexaoSql.Open()
+                    comandoSql.ExecuteNonQuery()
 
-
-                comandoSql.ExecuteNonQuery()
+                End Using
 
             End Using
 
-        End Using
+            ExibirMensagem("Filme atualizado com sucesso.")
+        Catch ex As Exception
+            ExibirMensagem("Não foi possível atualizar o filme agora.", False)
+            e.Canceled = True
+        End Try
 
     End Sub
 
@@ -152,32 +174,48 @@ Partial Class Projeto
         itemNovo.ExtractValues(valores)
         'extrai todas as mensagens do form'
 
-        Dim strConexao As String = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+        If valores("title") Is Nothing OrElse String.IsNullOrWhiteSpace(valores("title").ToString()) Then
+            ExibirMensagem("Informe um título para cadastrar o filme.", False)
+            e.Canceled = True
+            Return
+        End If
 
-        Using conexaoSql As New SqlConnection(strConexao)
+        Try
+            Using conexaoSql As New SqlConnection(StringConexao)
 
-            ' não ultilizar o WHERE , Nós empurramos colunas e valores brutos!'
+                ' não ultilizar o WHERE , Nós empurramos colunas e valores brutos!'
 
-            Dim comandoDeInsert As String = "INSERT INTO Movies (id, title, overview, release_date) VALUES (@id, @title, @overview, @release_date)"
+                Dim comandoDeInsert As String = "INSERT INTO Movies (title, overview, release_date) VALUES (@title, @overview, @release_date)"
 
-            Using comandoSql As New SqlCommand(comandoDeInsert, conexaoSql)
+                Using comandoSql As New SqlCommand(comandoDeInsert, conexaoSql)
 
-                'parametros'
+                    'parametros'
 
-                comandoSql.Parameters.AddWithValue("@id", If(valores("id"), DBNull.Value))
-                comandoSql.Parameters.AddWithValue("@title", If(valores("title"), DBNull.Value))
-                comandoSql.Parameters.AddWithValue("@overview", If(valores("overview"), DBNull.Value))
-                comandoSql.Parameters.AddWithValue("@release_date", If(valores("release_date"), DBNull.Value))
+                    comandoSql.Parameters.Add("@title", SqlDbType.NVarChar, 255).Value = valores("title").ToString().Trim()
+                    comandoSql.Parameters.Add("@overview", SqlDbType.NVarChar).Value = If(valores("overview"), DBNull.Value)
+                    comandoSql.Parameters.Add("@release_date", SqlDbType.Date).Value = If(valores("release_date"), DBNull.Value)
 
-                conexaoSql.Open()
+                    conexaoSql.Open()
+                    comandoSql.ExecuteNonQuery()
 
-                comandoSql.ExecuteNonQuery()
+                End Using
 
             End Using
 
-        End Using
+            ExibirMensagem("Filme cadastrado com sucesso.")
+        Catch ex As Exception
+            ExibirMensagem("Não foi possível cadastrar o filme agora.", False)
+            e.Canceled = True
+        End Try
 
     End Sub
 
-End Class
+    Protected Sub GridFilmes_ItemCommand(sender As Object, e As GridCommandEventArgs)
+        If e.CommandName = "VerDetalhes" Then
+            Dim itemClicado As GridDataItem = CType(e.Item, GridDataItem)
+            Dim idDoFilme As Integer = Convert.ToInt32(itemClicado.GetDataKeyValue("id"))
+            Response.Redirect("detalhes.aspx?id=" & idDoFilme.ToString())
+        End If
+    End Sub
 
+End Class
