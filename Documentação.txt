@@ -87,3 +87,14 @@ Desafio: Transacionar as requisições enviadas ao Grid no Frontend de forma pur
 Conhecimento Aplicado: Através do 'Projeto.aspx.vb', os três gatilhos morais ('OnUpdateCommand', 'OnInsertCommand', 'OnDeleteCommand') ativaram os scripts Backend. Para resgatar tudo o que foi modificado pelo usuário nas TextBoxes virtuais do grid, foi implementado o método Telerik intrínseco 'item.ExtractValues(Hashtable)'. Já na ligação de arquitetura ADO.NET com o Banco, implementaram-se comandos SQL nativos e atrelou-se a tecnologia de parâmetros (AddWithValue), que encapsula as strings do client em um contêiner fechado blindando todos os campos antes de acionar a 'SqlConnection'. Uma descoberta afortunada se mostrou: por o ID do SQL ser pré-configurado como 'Auto-Incremento', a coluna homônima foi intencionalmente delatada na exibição, deixando a inteligência de inserção dos valores sob inteira responsabilidade do T-SQL.
 
 Status Atual: Desafio 4 finalizado com nota máxima. Os pilares de Criação, Leitura, Atualização e Destruição via ASP.NET Webforms operam perfeitamente. O projeto agora é uma aplicação de Dados Reais.
+
+------------------------------------------------------
+
+Desafio 5: Interações no Client-Side via JavaScript
+Nesta etapa, focou-se em transferir e mesclar a responsabilidade dos eventos de resposta imediata do painel de administração para o navegador (Client-Side), aprimorando a dinamicidade da Web.
+
+Obstáculo 1: A Captura de Dados Telerik Híbrida via JavaScript DOM
+Desafio: Ativar a seleção unificada de células do Grid e interceptar um duplo clique veloz (OnRowDblClick), localizando qual filme foi acessado exclusivamente via navegador sem fazer "Reload" (chamadas ao C#).
+Conhecimento Aplicado: No design do projeto via '<ClientSettings>', foi ativada a restrição '<Selecting AllowRowSelect="true" />', agrupando e totalizando a seleção de todas as células de uma linha da tabela de uma só vez. Estabelecido o escutador principal ('<ClientEvents OnRowDblClick="DuploCliqueJavascript" />'), a arquitetura Javascript montada sob um '<telerik:RadCodeBlock>' permitiu dominar os parâmetros soltos da interface Client. Com os comandos puros 'args.get_tableView().get_dataItems()', gerou-se um Array Mestre onde, com o rastreio numérico da execução atual ('args.get_itemIndexHierarchical()'), fisgamos virtualmente o componente inteiro manipulado pelo mouse. Segurando o próprio objeto do sistema, ordenou-se extrair diretamente a propriedade desejada ('get_cell("title").innerHTML'), processando uma formatação pura via Javascript (alert pop-up) sem qualquer erro de indexação. 
+
+Status Atual: Desafio 5 finalizado. O RadGrid assumiu uma responsabilidade híbrida de ouro: O Backend atira pesadamente o banco SQL Server de forma oculta nos fundos (CRUD) enquanto o navegador abraça toda a beleza do Frontend flutuando com scripts e feedbacks dinâmicos.
