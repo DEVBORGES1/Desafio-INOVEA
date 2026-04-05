@@ -98,3 +98,18 @@ Desafio: Ativar a seleção unificada de células do Grid e interceptar um duplo
 Conhecimento Aplicado: No design do projeto via '<ClientSettings>', foi ativada a restrição '<Selecting AllowRowSelect="true" />', agrupando e totalizando a seleção de todas as células de uma linha da tabela de uma só vez. Estabelecido o escutador principal ('<ClientEvents OnRowDblClick="DuploCliqueJavascript" />'), a arquitetura Javascript montada sob um '<telerik:RadCodeBlock>' permitiu dominar os parâmetros soltos da interface Client. Com os comandos puros 'args.get_tableView().get_dataItems()', gerou-se um Array Mestre onde, com o rastreio numérico da execução atual ('args.get_itemIndexHierarchical()'), fisgamos virtualmente o componente inteiro manipulado pelo mouse. Segurando o próprio objeto do sistema, ordenou-se extrair diretamente a propriedade desejada ('get_cell("title").innerHTML'), processando uma formatação pura via Javascript (alert pop-up) sem qualquer erro de indexação. 
 
 Status Atual: Desafio 5 finalizado. O RadGrid assumiu uma responsabilidade híbrida de ouro: O Backend atira pesadamente o banco SQL Server de forma oculta nos fundos (CRUD) enquanto o navegador abraça toda a beleza do Frontend flutuando com scripts e feedbacks dinâmicos.
+
+------------------------------------------------------
+
+Desafio 6: Navegação Client-Side com Roteamento Dinâmico (Master/Detail)
+O último desafio consolidou o projeto criando a ponte clássica entre a Lista Mestra interativa (Frontend) e a Leitura Profunda das colunas de dados (Backend) acopladas numa segunda tela de destrinchamento.
+
+Obstáculo 1: Roteamento de URL usando QueryStrings através da API do Telerik
+Desafio: Redirecionar o usuário interceptando o evento de Duplo Clique e atrelando a chave mestra de busca (ID) na barra de navegação (QueryString) para despachá-lo sem causar travamentos.
+Conhecimento Aplicado: Retornando ao arquivo 'Projeto.aspx', habilitou-se o atributo 'ClientDataKeyNames="id"' diretamente no Grid, permitindo que a camada insegura do Javascript consiga puxar magicamente a id blindada do DataKeyValue daquela linha (linhaSelecionada.getDataKeyValue("id")). Substituiu-se o window.alert temporal pela injeção da rota formal: 'window.location.href = "detalhes.aspx?id=" + id'.
+
+Obstáculo 2: Renderização Nativa e Limpeza de Lixo da Tabela
+Desafio: Apossar-se do ID na segunda tela ('detalhes.aspx') via C# e carregar todas as propriedades esquecidas (Rating, Adult, Popularity) da tabela do CSV importado, camuflar colunas problemáticas e traduzir o visual sem perder vínculos ADO.NET.
+Conhecimento Aplicado: No evento intrínseco 'Page_Load' da tela nova, a interceptação do endereço se fez via 'Request.QueryString("id")' (evitando erros Null se a URL estivesse "rasgada" pelo If Not IsNullOrEmpty). Usou-se 'SELECT *' amparado por parâmetros isolados ('@id'). Uma vez que o 'AutoGenerateColumns' trouxe poluição do banco ('column1' e nomes em inglês na GUI), desativou-se o controle robótico injetando colunas '<telerik:GridBoundColumn>' exclusivas, ocultando as desnecessárias, aplicando Cast de Tradução em tempo de Binding no Título (HeaderText) e moldando as datas estritamente pelo 'DataFormatString="{0:dd/MM/yyyy}"'.
+
+**Conclusão Oficial do Projeto**: Todos os desafios do processo seletivo / estudo foram executados em total harmonia e com código maduro contra injeções. A suíte Telerik ASP.NET Webforms guiada por banco SQL nativo está masterizada.

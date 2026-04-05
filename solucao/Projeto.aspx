@@ -31,7 +31,7 @@
             OnInsertCommand="GridFilmes_InsertCommand"
             OnDeleteCommand="GridFilmes_DeleteCommand"
             >
-               <MasterTableView DataKeyNames="id"  CommandItemDisplay ="Top">
+               <MasterTableView DataKeyNames="id" ClientDataKeyNames="id" CommandItemDisplay ="Top">
                    <CommandItemSettings AddNewRecordText="Adicionar Novo Filme" 
                        RefreshText="Atualizar Grade" />
 
@@ -80,17 +80,18 @@
 
                 function DuploCliqueJavascript(remetente, args) {
 
+
                     var tabelaVisual = args.get_tableView();
-      
+
                     var todasAsLinhas = tabelaVisual.get_dataItems();
 
                     var indiceDaLinhaClicada = args.get_itemIndexHierarchical();
 
                     var linhaSelecionada = todasAsLinhas[indiceDaLinhaClicada];
 
-                    var tituloDoFilme = linhaSelecionada.get_cell("title").innerHTML;
+                    var idDoFilme = linhaSelecionada.getDataKeyValue("id");
 
-                    alert("Interação Javascript feita com Sucesso! \nVocê deu um duplo clique no filme:\n\n " + tituloDoFilme);
+                    window.location.href = "detalhes.aspx?id=" + idDoFilme;
                 }
 
             </script>
