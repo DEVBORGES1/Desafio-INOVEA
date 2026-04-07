@@ -46,7 +46,7 @@ Conhecimento Aplicado: Adotamos o padrão recomendado "Advanced Data Binding". N
 
 Obstáculo 4: Erro do Telerik (WebResource.axd is missing)
 Desafio: A página abriu, porém estourou logo de cara exigindo um HttpHandler no Web.config.
-Causa e Resolução: Componentes modernos (como o RadScriptManager) precisam de permissões especiais de injeção de Javascript no navegador para funcionarem. Adicionamos a tag `<system.webServer>` no final do Web.config liberando o WebResource especial da Telerik.
+Causa e Resolução: Componentes modernos (como o RadScriptManager) precisam de permissões especiais de injeção de Javascript no navegador para funcionarem. Adicionamos a tag <system.webServer> no final do Web.config liberando o WebResource especial da Telerik.
 
 Status Atual: Módulo 2 finalizado 100% com sucesso. Banco de dados e Front-end interligados, exibindo lindamente o Grid populado com as informações processadas pelo ASP.NET.
 
@@ -112,4 +112,23 @@ Obstáculo 2: Renderização Nativa e Limpeza de Lixo da Tabela
 Desafio: Apossar-se do ID na segunda tela ('detalhes.aspx') via C# e carregar todas as propriedades esquecidas (Rating, Adult, Popularity) da tabela do CSV importado, camuflar colunas problemáticas e traduzir o visual sem perder vínculos ADO.NET.
 Conhecimento Aplicado: No evento intrínseco 'Page_Load' da tela nova, a interceptação do endereço se fez via 'Request.QueryString("id")' (evitando erros Null se a URL estivesse "rasgada" pelo If Not IsNullOrEmpty). Usou-se 'SELECT *' amparado por parâmetros isolados ('@id'). Uma vez que o 'AutoGenerateColumns' trouxe poluição do banco ('column1' e nomes em inglês na GUI), desativou-se o controle robótico injetando colunas '<telerik:GridBoundColumn>' exclusivas, ocultando as desnecessárias, aplicando Cast de Tradução em tempo de Binding no Título (HeaderText) e moldando as datas estritamente pelo 'DataFormatString="{0:dd/MM/yyyy}"'.
 
-**Conclusão Oficial do Projeto**: Todos os desafios do processo seletivo / estudo foram executados em total harmonia e com código maduro contra injeções. A suíte Telerik ASP.NET Webforms guiada por banco SQL nativo está masterizada.
+------------------------------------------------------
+
+Desafio 7: UI/UX Masterpiece, OMDb API, Analytics e Paginação Enterprise (Extrapolando Requisitos)
+A etapa final elevou a arquitetura do projeto de um simples "Estudo de CRUD Acadêmico" para um "Módulo de Gerenciamento Real de Cloud Premium". Foram aplicados padrões estritos de interface e tratativa profunda de dados sensíveis na camada ADO.NET.
+
+Inovação 1: Consumo de API Externa (OMDb) e Injeção Multimídia
+Desafio: A tabela do Kaggle não trazia imagens dos filmes, deixando a experiência fria e apática.
+Conhecimento Aplicado: Na tela detalhes.aspx, foi inserida uma <telerik:GridTemplateColumn> acompanhada da tecnologia moderna de requisição Javascript paralela (Fetch API). Assinamos uma chave da Open Movie Database (OMDb) e passamos a alimentar o endereço live com o 'title' do filme. Sem gerar gargalos para o processador do nosso Backend, o navegador do cliente pesca a imagem original global via JSON em milissegundos e preenche o Card. Filmes customizados sem poster receberam um tratamento Fallback Inteligente (API UI-Avatars) que gera um brasão fotográfico com letras de neon dinâmicas.
+
+Inovação 2: Arquitetura Enterprise - Paginação Direta no SQL (OFFSET/FETCH)
+Desafio: O Grid estava configurado implicitamente pelos padrões de Webforms. Exigir o Telerik para montar 40.000 linhas localmente sobrecarregava as requisições gerando "Engasgos". Além disso, a inserção de novos ID's sumia devido ao BUG de texto (O Kaggle força identificadores '9999' em "Ordem Alfabética" suprimindo números grandes como '10000').
+Causa e Resolução: 
+- O C# foi reformulado. Ao invés de trafegar a matriz pesada e ler o 'DataView.RowFilter' no Telerik, ativamos o 'AllowCustomPaging="true"'. O C# executa agora um 'SELECT COUNT()' virtual imediato repassando a metragem vazia das páginas. Em seguida, injetamos a cláusula SQL 'OFFSET [X] ROWS FETCH NEXT [Y] ROWS ONLY', fazendo a página transferir exatas e absolutas pesagens de milissegundos ao banco.
+- Evadimos o Bug fatal de exceções de string sujas introduzindo 'TRY_CAST(id AS INT)' sobre as querys de MAX() das chaves primárias e da cláusula ORDER BY DESC. Isso garantiu que as linhas em texto sujo deixassem a prioridade do topo de forma natural. 
+
+Inovação 3: Interceptador de Regex dos Filtros Booleanos do Telerik
+Desafio: Ao clicar no filtro especial "Adulto + 18" utilizando o FilterMenu, o Telerik forçava a busca injetando unicamente a palavra nativa 'True'. O T-SQL explodia apresentando: "Msg Erro Servidor - Nome de coluna 'True' não localizado", assumindo que a palavra crua do C# era um Objeto de Tabela ausente.
+Solução Definitiva: No disparador 'NeedDataSource', implantou-se uma varredura de Expressão Regular de Elite ('\s*True\b' e '\s*False\b'). O C# escaneia e sequestra as intenções em tempo real do FilterExpression e gruda aspas simples (" 'True' ") neutralizando espaços indesejados. Isso previne corrupções na frase nativa do LIKE do SQL Server sem inutilizar as chaves lógicas.
+
+Conclusão Oficial do Projeto: Todos os desafios do processo seletivo / estudo foram executados em total harmonia e com código maduro contra injeções. A suíte Telerik ASP.NET Webforms guiada por banco SQL nativo está masterizada.
