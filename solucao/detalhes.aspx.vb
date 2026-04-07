@@ -8,13 +8,11 @@ Partial Class detalhes
     ' Esse evento dispara sozinho no exato milissegundo em que a página nasce na tela
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        ' Só foca no banco caso a pessoa esteja entrando na página de forma fresca
+
         If Not IsPostBack Then
 
-            ' 1. Pesca o ID invisível que o nosso Javascript atirou lá em cima na Barra de URL
             Dim idDoFilme As String = Request.QueryString("id")
 
-            ' Proteção: Se a pessoa tentar acessar a tela solta, sem ID nenhum, o sistema ignora.
             If Not String.IsNullOrEmpty(idDoFilme) Then
                 CarregarDetalhesDoFilme(idDoFilme)
             End If
@@ -28,7 +26,7 @@ Partial Class detalhes
 
         Using conexaoSql As New SqlConnection(strConexao)
 
-            ' O Grande Momento: SELECT * para ler todas as 11 colunas que escondemos antes
+            ' O Grande Momento: SELECT * para ler todas as 11 colunas que retirei antes
             Dim comandoDeBusca As String = "SELECT * FROM Movies WHERE id = @id"
 
             Using comandoSql As New SqlCommand(comandoDeBusca, conexaoSql)
@@ -43,7 +41,6 @@ Partial Class detalhes
             End Using
         End Using
 
-        ' Pegamos a panela com o filme e servimos no nosso novo Grid vazio da tela HTML!
         GridDetalhes.DataSource = tabelaVazia
         GridDetalhes.DataBind()
     End Sub
